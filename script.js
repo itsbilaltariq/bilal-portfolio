@@ -360,7 +360,11 @@ const terminalCommands = {
   4. Library Management System (Python, MySQL, OOP)
      * Programmed dynamic borrowing catalogs, inventory updates, and penalty calculations.
   
-  5. Interactive Developer Portfolio (HTML, CSS, JS, Web3Forms)
+  5. Smart Fashion Store (Python, Flask, SQLite, SQLAlchemy)
+     * Designed an intelligent e-commerce catalog with user accounts and dashboards.
+     * Created role-based session auth and outfit recommendation scheduling.
+  
+  6. Interactive Developer Portfolio (HTML, CSS, JS, Web3Forms)
      * Created this portfolio with shell emulator, 3D tilt, and automated Gmail forwarding.
   
   * Use 'contact' to get links to my repositories.`,

@@ -345,17 +345,23 @@ const terminalCommands = {
 
   projects: `FEATURED PROJECTS SUMMARY:
   ------------------------------------
-  1. Qalam Clone (React, Express, Node.js, MongoDB)
+  1. PromptForge Workspace (React, Node, Express, MongoDB)
+     * Built a collaborative sandbox prompt playground with variables insertion.
+     * Managed schema integrations, LLM version logging, and team tagging.
+  
+  2. Qalam Clone (React, Express, Node.js, MongoDB)
      * Replicated NUST's course dashboard, student portals, and grade catalogs.
      * Engineered REST endpoints linked to dynamic databases with secure logins.
   
-  2. Bank Management System (Express, Node, MySQL, JDBC)
+  3. Bank Management System (Express, Node, MySQL, JDBC)
      * Built accounts systems supporting concurrent ledger updates and statement logs.
      * Separated Admin database entries from customer account capabilities.
   
-  3. Library Management System (Python, MySQL, OOP)
+  4. Library Management System (Python, MySQL, OOP)
      * Programmed dynamic borrowing catalogs, inventory updates, and penalty calculations.
-     * Normalized DB tables to 3NF schema constraints.
+  
+  5. Interactive Developer Portfolio (HTML, CSS, JS, Web3Forms)
+     * Created this portfolio with shell emulator, 3D tilt, and automated Gmail forwarding.
   
   * Use 'contact' to get links to my repositories.`,
 
@@ -495,7 +501,7 @@ function handleContactSubmit(event) {
       'Accept': 'application/json'
     },
     body: JSON.stringify({
-      access_key: '97443ed0-6a63-41fd-8fd1-6ed244a5556a',
+      access_key: '2f2fb2e4-dc5c-412f-9085-baba0be983fb',
       name: name,
       email: email,
       subject: subject,

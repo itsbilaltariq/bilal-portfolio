@@ -6,9 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
   initTyping();
   initCanvas();
-  initTerminal();
-  initScrollAnimations();
-  init3DTilt();
+  
+  // Load dynamic projects, then init the rest of components requiring DOM elements
+  initProjects().then(() => {
+    initTerminal();
+    initScrollAnimations();
+    init3DTilt();
+  });
 });
 
 /* ==========================================
@@ -277,6 +281,93 @@ function initCanvas() {
 }
 
 /* ==========================================
+   3.5. Dynamic Projects Loading
+   ========================================== */
+let projectsData = [];
+
+async function initProjects() {
+  try {
+    const response = await fetch('projects.json');
+    if (!response.ok) {
+      throw new Error(`Failed to fetch projects.json: ${response.statusText}`);
+    }
+    projectsData = await response.json();
+    renderProjects(projectsData);
+  } catch (error) {
+    console.error('Error loading projects:', error);
+    const grid = document.querySelector('.projects-grid');
+    if (grid) {
+      grid.innerHTML = `
+        <div class="error-loading" style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #ff4d4d;">
+          <p>Failed to load projects. Please try refreshing the page.</p>
+        </div>
+      `;
+    }
+  }
+}
+
+function renderProjects(projects) {
+  const grid = document.querySelector('.projects-grid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  
+  projects.forEach(proj => {
+    const card = document.createElement('div');
+    card.className = 'project-card glass-card';
+    
+    let linksHtml = '';
+    if (proj.githubUrl) {
+      linksHtml += `
+        <a href="${proj.githubUrl}" target="_blank" class="project-link" title="View GitHub Code">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+        </a>
+      `;
+    }
+    if (proj.liveUrl) {
+      linksHtml += `
+        <a href="${proj.liveUrl}" target="_blank" class="project-link" title="Live Preview">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+      `;
+    }
+    
+    const tagsHtml = proj.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+    const featuresHtml = proj.features.map(feat => `<li>${feat}</li>`).join('');
+    
+    card.innerHTML = `
+      <div class="project-glow"></div>
+      <div class="project-meta">
+        <span class="project-year">${proj.year || ''}</span>
+        <div class="project-links">
+          ${linksHtml}
+        </div>
+      </div>
+      
+      <h3 class="project-title">${proj.title}</h3>
+      <p class="project-desc">${proj.desc}</p>
+      
+      <div class="project-tags">
+        ${tagsHtml}
+      </div>
+      
+      <button class="project-details-btn" onclick="toggleDetails(this)">
+        <span>Explore Features</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+      
+      <div class="project-details-panel">
+        <ul>
+          ${featuresHtml}
+        </ul>
+      </div>
+    `;
+    
+    grid.appendChild(card);
+  });
+}
+
+/* ==========================================
    4. Terminal Emulator Functionality
    ========================================== */
 function initTerminal() {
@@ -343,31 +434,23 @@ const terminalCommands = {
   AI/ML & Core   [████████████░░░░░] 75%
                  PyTorch, TensorFlow, scikit-learn, DSA, OOP`,
 
-  projects: `FEATURED PROJECTS SUMMARY:
-  ------------------------------------
-  1. PromptForge Workspace (React, Node, Express, MongoDB)
-     * Built a collaborative sandbox prompt playground with variables insertion.
-     * Managed schema integrations, LLM version logging, and team tagging.
-  
-  2. Qalam Clone (React, Express, Node.js, MongoDB)
-     * Replicated NUST's course dashboard, student portals, and grade catalogs.
-     * Engineered REST endpoints linked to dynamic databases with secure logins.
-  
-  3. Bank Management System (Express, Node, MySQL, JDBC)
-     * Built accounts systems supporting concurrent ledger updates and statement logs.
-     * Separated Admin database entries from customer account capabilities.
-  
-  4. Library Management System (Python, MySQL, OOP)
-     * Programmed dynamic borrowing catalogs, inventory updates, and penalty calculations.
-  
-  5. Smart Fashion Store (Python, Flask, SQLite, SQLAlchemy)
-     * Designed an intelligent e-commerce catalog with user accounts and dashboards.
-     * Created role-based session auth and outfit recommendation scheduling.
-  
-  6. Interactive Developer Portfolio (HTML, CSS, JS, Web3Forms)
-     * Created this portfolio with shell emulator, 3D tilt, and automated Gmail forwarding.
-  
-  * Use 'contact' to get links to my repositories.`,
+  projects: () => {
+    let projectsStr = "FEATURED PROJECTS SUMMARY:\n  ------------------------------------\n";
+    projectsData.forEach((proj, idx) => {
+      const tagsStr = proj.tags.slice(0, 4).join(', ');
+      projectsStr += `  ${idx + 1}. ${proj.title} (${tagsStr})\n`;
+      if (proj.features && proj.features.length > 0) {
+        proj.features.slice(0, 2).forEach(feat => {
+          projectsStr += `     * ${feat}\n`;
+        });
+      } else {
+        projectsStr += `     * ${proj.desc}\n`;
+      }
+      projectsStr += "\n";
+    });
+    projectsStr += "  * Use 'contact' to get links to my repositories.";
+    return projectsStr;
+  },
 
   contact: `CONNECT PATHWAYS:
   ------------------------------------
@@ -401,7 +484,10 @@ function processCommand(cmd) {
 
   if (terminalCommands.hasOwnProperty(cleanCmd)) {
     responseLine.className += ' info';
-    responseLine.innerHTML = terminalCommands[cleanCmd].replace(/\n/g, '<br>');
+    const outputText = typeof terminalCommands[cleanCmd] === 'function'
+      ? terminalCommands[cleanCmd]()
+      : terminalCommands[cleanCmd];
+    responseLine.innerHTML = outputText.replace(/\n/g, '<br>');
   } else {
     responseLine.className += ' error';
     responseLine.innerHTML = `command not found: "${cmd}". Type 'help' for suggestions.`;

@@ -1,0 +1,44 @@
+name: Add Project to Portfolio
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo_name:
+        description: 'GitHub Repository name (e.g., PromptForge)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  add-project:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Execute project compilation script
+        run: node scripts/add-project.mjs "${{ inputs.repo_name }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          # You can override LLM_BASE_URL and LLM_MODEL in repository variables if needed
+          LLM_BASE_URL: ${{ vars.LLM_BASE_URL || 'https://api.groq.com/openai/v1/chat/completions' }}
+          LLM_MODEL: ${{ vars.LLM_MODEL || 'llama-3.3-70b-versatile' }}
+
+      - name: Commit and push updated projects.json
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add projects.json
+          git commit -m "auto: append/update project ${{ inputs.repo_name }} in projects.json" || echo "No changes detected to projects.json"
+          git push

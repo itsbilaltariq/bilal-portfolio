@@ -1,0 +1,126 @@
+[
+  {
+    "id": "qalam-academic-clone",
+    "title": "Qalam Academic Clone",
+    "year": "2024",
+    "repo": "itsbilaltariq/qalam-academic-clone",
+    "githubUrl": "https://github.com/itsbilaltariq",
+    "liveUrl": "",
+    "desc": "A feature-rich clone of the official Qalam academic management portal used at NUST. Streamlines student course registration, academic performance monitoring, and assignment portals.",
+    "tags": [
+      "React",
+      "Express.js",
+      "Node.js",
+      "MongoDB",
+      "REST API"
+    ],
+    "features": [
+      "Implemented full-featured student portal clone handling active course schedules and grade tracking sheets.",
+      "Engineered secure token-based user authentication and route verification for student vs. administrator profiles.",
+      "Designed dynamic REST API endpoints using Express to serve student data from a structured MongoDB database."
+    ]
+  },
+  {
+    "id": "bank-management-system",
+    "title": "Bank Management System",
+    "year": "2026",
+    "repo": "itsbilaltariq/bank-management-system",
+    "githubUrl": "https://github.com/itsbilaltariq",
+    "liveUrl": "",
+    "desc": "A transactional banking database system supporting accounts management, fund transfers, and ledger statements. Features dual interface portals for tellers and banking customers.",
+    "tags": [
+      "Express",
+      "Node.js",
+      "JavaScript",
+      "MySQL",
+      "JDBC"
+    ],
+    "features": [
+      "Created a full-featured accounts ledger database resolving concurrent bank transactions and record history.",
+      "Built a role-based authentication model separating client logins from bank manager administrative capabilities.",
+      "Constructed reliable Express REST interfaces using connection pooling to read/write transactions into a normalized MySQL schema."
+    ]
+  },
+  {
+    "id": "library-management-system",
+    "title": "Library Management System",
+    "year": "2025",
+    "repo": "itsbilaltariq/library-management-system",
+    "githubUrl": "https://github.com/itsbilaltariq",
+    "liveUrl": "",
+    "desc": "A modular library index system supporting catalog search, borrower registration, item reserves, and dynamically computed fine logs. Designed using strict Object-Oriented principles.",
+    "tags": [
+      "Python",
+      "MySQL",
+      "OOP Principles",
+      "Normalised Design"
+    ],
+    "features": [
+      "Programmed structured catalog indexes handling full CRUD operations for book inventory, logs, and user cards.",
+      "Designed dynamic algorithms to calculate late-return fines and update member borrowing states on login.",
+      "Normalized MySQL database schemas up to 3NF to avoid record redundancies and ensure data integrity."
+    ]
+  },
+  {
+    "id": "promptforge",
+    "title": "PromptForge Workspace",
+    "year": "2026",
+    "repo": "itsbilaltariq/PromptForge",
+    "githubUrl": "https://github.com/itsbilaltariq/PromptForge",
+    "liveUrl": "",
+    "desc": "A full-stack AI prompt engineering platform that helps users create, refine, and manage prompts for large language models. It provides a comprehensive solution for prompt management, leveraging advanced technologies for a seamless user experience.",
+    "tags": [
+      "React",
+      "Node.js",
+      "MongoDB",
+      "Express",
+      "AI"
+    ],
+    "features": [
+      "Engineered a responsive and modern UI with React and Tailwind CSS for enhanced user interaction",
+      "Developed a robust REST API using Node.js and Express, handling authentication, prompt storage, and AI integration logic",
+      "Integrated Groq's Llama 3.3 70B model for real-time prompt generation and improvement, leveraging low-latency inference"
+    ]
+  },
+  {
+    "id": "interactive-portfolio-shell",
+    "title": "Interactive Portfolio Shell",
+    "year": "2026",
+    "repo": "itsbilaltariq/bilal-portfolio",
+    "githubUrl": "https://github.com/itsbilaltariq/bilal-portfolio",
+    "liveUrl": "",
+    "desc": "A high-performance modern developer portfolio. Features a retro bash shell terminal, custom 3D card tilt parallax, animated canvas particles, and instant contact mail routing.",
+    "tags": [
+      "HTML5",
+      "CSS3 (Custom Variables)",
+      "JavaScript (ES6)",
+      "Web3Forms API"
+    ],
+    "features": [
+      "Programmed a complete terminal shell emulator processing basic console commands (`help`, `about`, `projects`).",
+      "Designed custom 3D card-tilt mechanics tracking cursor vectors and a morphing shape avatar displaying a hover code overlay.",
+      "Integrated serverless contact mail submission routing query parameters to a live Gmail account."
+    ]
+  },
+  {
+    "id": "smart-fashion-store",
+    "title": "Smart Fashion Store",
+    "year": "2026",
+    "repo": "itsbilaltariq/smart-fashion-store",
+    "githubUrl": "https://github.com/itsbilaltariq/smart-fashion-store",
+    "liveUrl": "",
+    "desc": "An intelligent e-commerce catalog application featuring dynamic product management, user authentication, secure dashboards, and AI-driven outfit recommendations.",
+    "tags": [
+      "Python",
+      "Flask",
+      "SQLite",
+      "SQLAlchemy",
+      "HTML/CSS"
+    ],
+    "features": [
+      "Designed dynamic database models (User, Product, OutfitRecommendation) using SQLAlchemy for robust relational schemas.",
+      "Created a secure role-based session authentication system using Werkzeug password hashing and Flask-Login.",
+      "Developed an interactive administration control panel to catalog fashion products and schedule personalized outfit recommendations."
+    ]
+  }
+]
